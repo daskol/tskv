@@ -1,0 +1,8 @@
+2016-11-05 Daniel Bershatsky <daniel.bershatsky@skolkovotech.ru>
+
+	1. Dump dictionaries to file-like object or string.
+	2. Load kv-pairs from file-like object or string.
+	3. Cast value from string to python base types.
+	4. Add installation guide.
+	5. Update README files(add version for russians).
+	6. Packaging tksv-format library.
