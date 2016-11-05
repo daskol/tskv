@@ -19,7 +19,7 @@ def test_quote():
     value_in = '\\tes\tst\ri\ng==\0'
     value_out = quote(value_in)
 
-    assert value_out == '\\\\tes\\tst\\ri\\ng\\=\\=\\0'
+    assert value_out == '\\\\tes\\tst\\ri\\ng\\\\=\\\\=\\x00'
 
 def test_unquote():
     value_in = '\\\\tes\\tst\\ri\\ng\\=\\=\\0'

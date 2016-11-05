@@ -25,14 +25,16 @@ def dump(rec):
 
 def load(raw):
     if not raw.startswith(TSKV_PREFIX + '\t'):
-        raise ValueError('Raw content is not in TSKV format: it should start with `tskv\\t`.')
+        raise ValueError('Raw content is not in TSKV format: '
+                         'it should start with `tskv\\t`.')
 
     record = dict()
     kv_pairs = raw[5:].split('\t')
 
     for pair in kv_pairs:
         if not pair:
-            ValueError('Raw content is not in TSKV format: it contains too many tab separators.')
+            ValueError('Raw content is not in TSKV format: '
+                       'it contains too many tab separators.')
 
         parts = pair.split('=')
         prefix = tuple(takewhile(lambda x: x.endswith('/'), parts))
@@ -44,18 +46,12 @@ def load(raw):
 
 def quote(value):
     return (value.
-            replace('\\', '\\\\').
             replace('=', '\\=').
-            replace('\t', '\\t').
-            replace('\n', '\\n').
-            replace('\r', '\\r').
-            replace('\0', '\\0'))
+            encode('unicode_escape').
+            decode('ascii'))
 
 def unquote(value):
     return (value.
-            replace('\\\\', '\\').  # TODO: fix rewriting
-            replace('\\=', '=').
-            replace('\\t', '\t').
-            replace('\\n', '\n').
-            replace('\\r', '\r').
-            replace('\\0', '\0'))
+            encode('ascii').
+            decode('unicode_escape').
+            replace('\\=', '='))
