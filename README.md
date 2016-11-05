@@ -23,3 +23,9 @@ Than run tests as follows
 ```bash
     python -m unittest discover tskv/tests/
 ```
+
+## Examles
+
+In the begging it data representation format is used for running mappers in Hadoop Streaming regine.
+
+See [examples/](examples/) for working example of utility that converts nginx's logs to tksv-formatted files.
