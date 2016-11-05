@@ -1,11 +1,14 @@
 #   encoding: utf8
 #   tskv.py
 
+from io import TextIOBase
 from itertools import takewhile
 
 __all__ = (
     'dump',
+    'dumps',
     'load',
+    'loads',
     'quote',
     'unquote',
 )
@@ -13,7 +16,16 @@ __all__ = (
 TSKV_PREFIX = 'tskv'
 
 
-def dump(rec):
+def dump(obj, fp):
+    if not isinstance(fp, TextIOBase):
+        raise ValueError('File-like object should be instance of TextIOBase')
+
+    row = dumps(obj)
+
+    fp.write(row)
+    fp.write('\n')
+
+def dumps(rec):
     parts = [TSKV_PREFIX]
 
     for key, val in rec.items():
@@ -23,10 +35,21 @@ def dump(rec):
 
     return row
 
-def load(raw):
+def load(fp):
+    if not isinstance(fp, TextIOBase):
+        raise ValueError('File-like object should be instance of TextIOBase')
+
+    line = fp.readline()
+    record = loads(line)
+    return record
+
+def loads(raw):
     if not raw.startswith(TSKV_PREFIX + '\t'):
         raise ValueError('Raw content is not in TSKV format: '
                          'it should start with `tskv\\t`.')
+
+    if raw[-1] == '\n':
+        raw = raw[:-1]
 
     record = dict()
     kv_pairs = raw[5:].split('\t')
