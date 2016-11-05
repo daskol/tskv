@@ -91,8 +91,6 @@ def get_git_version():
     return gitver, version, (major, minor, patch), commit, rev
 
 def write_version(**kwargs):
-    from pprint import pprint
-    pprint(kwargs)
     content = VERSION_FILE.format(**kwargs)
 
     with open(VERSION_PATH, 'w') as fout:
@@ -120,6 +118,7 @@ def setup_package():
         long_description = '\n'.join(DOCLINES[2:]),
         author='Daniel Bershatsky',
         author_email='daniel.bershatsky@skolkovotech.ru',
+        url='https://github.com/daskol/tskv',
         license='MIT',
         platforms=PLATFORMS,
         classifiers=[line for line in CLASSIFIERS.split('\n') if line],
