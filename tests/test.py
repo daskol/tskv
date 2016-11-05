@@ -7,6 +7,7 @@ import unittest
 from os import fdopen, unlink
 from tempfile import mkstemp
 from tskv import *
+from tskv.tskv import cast
 
 
 class TskvTest(unittest.TestCase):
@@ -73,6 +74,12 @@ class TskvTest(unittest.TestCase):
         value_out = unquote(value_in)
 
         assert value_out == '\\tes\tst\ri\ng==\0'
+
+    def test_cast(self):
+        assert cast('42') == 42
+        assert cast('3.14') == 3.14
+        assert cast('True') == True
+        assert cast('False') == False
 
 
 if __name__ == '__main__':

@@ -68,13 +68,43 @@ def loads(raw):
     return record
 
 def quote(value):
-    return (value.
+    return (str(value).
             replace('=', '\\=').
             encode('unicode_escape').
             decode('ascii'))
 
 def unquote(value):
-    return (value.
+    return cast((value.
             encode('ascii').
             decode('unicode_escape').
-            replace('\\=', '='))
+            replace('\\=', '=')))
+
+def boolean(value):
+    if value == 'False':
+        return False
+    elif value == 'True':
+        return True
+    else:
+        raise ValueError('Value is not type of bool.')
+
+def none(value):
+    if value:
+        raise ValueError('Value is not None type.')
+    else:
+        return None
+
+def cast(value):
+    cast_operators = (
+        int,
+        float,
+        boolean,
+        none,
+    )
+
+    for operator in cast_operators:
+        try:
+            return operator(value)
+        except ValueError:
+            continue
+
+    return value
