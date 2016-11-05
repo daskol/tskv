@@ -1,0 +1,5 @@
+# TODO
+
+1. Write exact format specification.
+2. Streaming decoding/encoding.
+3. Support for native architectures(C extension).
