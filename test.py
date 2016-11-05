@@ -15,7 +15,7 @@ class TskvTest(unittest.TestCase):
         in1 = 'tskv\tk1=v1\tk2=v2'
         out1 = dict(k1='v1', k2='v2')
 
-        fd, name = mkstemp(text=True, dir='.')
+        fd, name = mkstemp(text=True)
 
         with fdopen(fd, 'w') as fout:
             fout.write(in1)
@@ -37,7 +37,7 @@ class TskvTest(unittest.TestCase):
         out1a = 'tskv\tk1=v1\tk2=v2\n'
         out1b = 'tskv\tk2=v2\tk1=v1\n'
 
-        fd, name = mkstemp(text=True, dir='.')
+        fd, name = mkstemp(text=True)
 
         with fdopen(fd, 'w') as fout:
             dump(in1, fout)
