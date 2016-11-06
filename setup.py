@@ -7,7 +7,7 @@
 Implementation of Tab-Separated Key-Value file format in Python 3.
 """
 
-from setuptools import setup, find_packages
+from setuptools import Extension, find_packages, setup
 from subprocess import Popen, PIPE
 
 
@@ -110,6 +110,13 @@ def setup_version():
         full_version=gitver))
 
 def setup_package():
+    module_native = Extension(
+        'tskv.native',
+        sources=[
+            'tskv/native.c',
+            'tskv/nativemodule.c',
+        ])
+
     setup_version()
     setup(
         name='tskv',
@@ -122,7 +129,10 @@ def setup_package():
         license='MIT',
         platforms=PLATFORMS,
         classifiers=[line for line in CLASSIFIERS.split('\n') if line],
-        packages=find_packages())
+        packages=find_packages(),
+        ext_modules=[
+            module_native,
+        ])
 
 
 if __name__ == '__main__':
